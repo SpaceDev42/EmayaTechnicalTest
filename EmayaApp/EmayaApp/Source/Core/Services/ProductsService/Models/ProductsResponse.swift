@@ -16,6 +16,17 @@ struct Product: Codable {
     let category: Category
     let image: String
     let rating: Rating
+    var isFavorite: Bool = false
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case title
+        case price
+        case description
+        case category
+        case image
+        case rating
+    }
 }
 
 // MARK: - Rating

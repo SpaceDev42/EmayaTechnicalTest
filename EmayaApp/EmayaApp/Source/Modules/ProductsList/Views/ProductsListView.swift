@@ -11,19 +11,32 @@ struct ProductsListView: View {
     @StateObject private var viewModel = ProductListViewModel(dependencies: ProductsListViewModelDependencies())
     var body: some View {
         NavigationView {
-            ScrollView {
-                VStack {
-                    Spacer()
-                    Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-                    Spacer()
+            productsList
+                .toolbarBackground(.visible, for: .navigationBar)
+                .toolbarColorScheme(.light, for: .navigationBar)
+                .navigationTitle("Products")
+                .navigationBarTitleDisplayMode(.automatic)
+                .searchable(text: $viewModel.productSearch)
+                .sheet(isPresented: $viewModel.isPresentingProductDetail) {
+                    Color.blue.ignoresSafeArea()
+                }
+        }
+    }
+
+    // MARK: - Products List
+    private var productsList: some View {
+        ScrollView {
+            LazyVStack {
+                ForEach(viewModel.filteredProducts, id: \.id) { product in
+                    ProductCardView(product: product)
+                        .onTapGesture {
+                            viewModel.isPresentingProductDetail = true
+                        }
                 }
             }
-            .toolbarBackground(.visible, for: .navigationBar)
-            .toolbarBackground(.mint, for: .navigationBar)
-            .navigationTitle("Products")
-            .navigationBarTitleDisplayMode(.inline)
-            .searchable(text: $viewModel.productSearch)
+            .padding(.vertical)
         }
+        .colorScheme(.light)
     }
 }
 
