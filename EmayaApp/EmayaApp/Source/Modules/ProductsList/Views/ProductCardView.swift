@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ProductCardView: View {
-    @State var product: Product
+    @Binding var product: Product
 
     var body: some View {
         HStack(alignment: .center, spacing: 16) {
@@ -34,7 +34,7 @@ struct ProductCardView: View {
             if let image = phase.image {
                 image
                     .resizable()
-                    .scaledToFill()
+                    .aspectRatio(contentMode: .fit)
             } else if phase.error != nil {
                 Image(systemName: "exclamationmark.triangle")
                     .resizable()
@@ -77,30 +77,18 @@ struct ProductCardView: View {
         }
         .padding(.top, 4)
     }
-
-    /// Según la categoría, podrías retornar un icono diferente.
-    private func iconForCategory(_ category: Category) -> String {
-        switch category {
-        case .mensClothing:
-            return "tshirt"
-        case .womensClothing:
-            return "figure.dress.line.vertical.figure"
-        case .jewelery:
-            return "heart.circle"
-        case .electronics:
-            return "ipad"
-        }
-    }
 }
 
 #Preview {
-    ProductCardView(product: .init(
+    let product = Product(
         id: 1,
         title: "Samsung 49-Inch CHG90 144Hz Curved Gaming Monitor (LC49HG90DMNXZA) – Super Ultrawide Screen QLED",
         price: 999.99,
         description: "49 INCH SUPER ULTRAWIDE 32:9 CURVED GAMING MONITOR with dual 27 inch screen side by side QUANTUM DOT (QLED) TECHNOLOGY, HDR support and factory calibration provides stunningly realistic and accurate color and contrast 144HZ HIGH REFRESH RATE and 1ms ultra fast response time work to eliminate motion blur, ghosting, and reduce input lag",
         category: .electronics,
         image: "https://fakestoreapi.com/img/81Zt42ioCgL._AC_SX679_.jpg",
-        rating: .init(rate: 2.2, count: 140))
+        rating: .init(rate: 2.2, count: 140)
     )
+
+    ProductCardView(product: .constant(product))
 }
