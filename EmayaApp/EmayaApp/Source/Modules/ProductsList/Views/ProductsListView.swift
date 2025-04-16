@@ -18,7 +18,7 @@ struct ProductsListView: View {
                 .navigationBarTitleDisplayMode(.automatic)
                 .searchable(text: $viewModel.productSearch)
                 .sheet(isPresented: $viewModel.isPresentingProductDetail) {
-                    Color.blue.ignoresSafeArea()
+                    ProductDetailView(product: $viewModel.selectedProduct)
                 }
         }
     }
@@ -27,10 +27,10 @@ struct ProductsListView: View {
     private var productsList: some View {
         ScrollView {
             LazyVStack {
-                ForEach(viewModel.filteredProducts, id: \.id) { product in
+                ForEach($viewModel.filteredProducts, id: \.id) { product in
                     ProductCardView(product: product)
                         .onTapGesture {
-                            viewModel.isPresentingProductDetail = true
+                            viewModel.presentProduct(product.wrappedValue)
                         }
                 }
             }
