@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 // MARK: - Network Requester Protocols
 protocol NetworkRequesterType {
@@ -21,7 +22,6 @@ extension URLSession: NetworkRequesterType {
 
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
-        request.addValue("Bearer " + Constant.accessToken, forHTTPHeaderField: "Authorization")
 
         request.httpMethod = target.method.rawValue
         request.httpBody = target.body
