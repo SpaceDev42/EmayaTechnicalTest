@@ -14,7 +14,7 @@
 		EB51638E2DAF56B1005C4C1B /* Exceptions for "EmayaApp" folder in "EmayaApp" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Info.plist,
+				SupportingFiles/Info.plist,
 			);
 			target = EB51637B2DAF56AF005C4C1B /* EmayaApp */;
 		};
