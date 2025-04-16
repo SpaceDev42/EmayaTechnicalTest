@@ -12,7 +12,7 @@ typealias ProductsResponse = AnyPublisher<[Product], Error>
 
 // MARK: - Dependency
 protocol HasProductsService {
-    var tvShowsService: ProductsServiceType { get set }
+    var productsService: ProductsServiceType { get set }
 }
 
 // MARK: - Products Service Type
@@ -26,6 +26,10 @@ struct ProductsService: ProductsServiceType {
 
     private let dependencies: Dependencies
 
+    init(dependencies: Dependencies) {
+        self.dependencies = dependencies
+    }
+
     func fetchProducts() -> ProductsResponse {
         dependencies
             .networkManager
@@ -35,6 +39,6 @@ struct ProductsService: ProductsServiceType {
 }
 
 // MARK: - Service Dependencies
-struct TVShowsServiceDependencies: HasNetworkManager {
+struct ProductsServiceDependencies: HasNetworkManager {
     var networkManager: NetworkManagerType = NetworkManager(requester: URLSession.shared)
 }
