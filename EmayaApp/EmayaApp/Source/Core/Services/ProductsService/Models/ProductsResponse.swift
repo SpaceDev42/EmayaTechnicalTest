@@ -29,6 +29,21 @@ struct Product: Codable {
     }
 }
 
+extension Product {
+    static var empty: Product {
+        .init(
+            id: 0,
+            title: "",
+            price: 0.0,
+            description: "",
+            category: .electronics,
+            image: "",
+            rating: .init(rate: 0.0, count: 0),
+            isFavorite: false
+        )
+    }
+}
+
 // MARK: - Rating
 struct Rating: Codable {
     let rate: Double
@@ -36,9 +51,10 @@ struct Rating: Codable {
 }
 
 // MARK: - Category
-enum Category: String, Codable {
+enum Category: String, Codable, CaseIterable {
     case mensClothing = "men's clothing"
     case womensClothing = "women's clothing"
     case jewelery = "jewelery"
     case electronics = "electronics"
+    case none = "All products"
 }
